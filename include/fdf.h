@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:02:17 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/01 17:13:06 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/01 18:41:25 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <math.h>
 # include <mlx.h>
 # include <stdio.h>
+# include <errno.h>
+
 
 # define FALSE 0
 # define TRUE 1
@@ -98,6 +100,8 @@ typedef struct s_fdf
 unsigned int		ft_abs(int x);
 void				read_file(char *file_name, t_fdf *data);
 void				error(t_fdf **data, int flag);
+void				free_t_fdf(t_fdf *data);
+void				handle_empty_file(void);
 void				visualize(t_fdf *data);
 int					max1(int a, int b);
 float				mod(float i);

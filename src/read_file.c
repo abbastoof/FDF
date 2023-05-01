@@ -6,13 +6,13 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:04:19 by atoof             #+#    #+#             */
-/*   Updated: 2023/04/29 20:27:35 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/01 18:43:12 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	read_lines(t_fdf *data)
+static void	read_dimensions(t_fdf *data)
 {
 	int	flag;
 
@@ -32,12 +32,22 @@ void	read_lines(t_fdf *data)
 		}
 		free(data->line);
 	}
+	if (!data->split)
+		handle_empty_file();
 	while (data->split[data->width] && data->split[data->width][0] != '\n')
 		data->width++;
 	ft_free_split(data->split);
+}
+
+void	read_lines(t_fdf *data)
+{
+	read_dimensions(data);
 	data->lines = (char **)ft_calloc(sizeof(char *), data->height + 1);
 	if (!data->lines)
+	{
+		free_t_fdf(data);
 		return ;
+	}
 	close(data->fd);
 }
 
@@ -56,8 +66,6 @@ void	stash_file(t_fdf *data)
 		free(data->line);
 	}
 	close(data->fd);
-	// if (data->lines[0] == NULL)
-	// 	error(data->lines, 1);
 }
 
 void	init_z_matrix(t_fdf *data)
