@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:02:17 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/01 18:41:25 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/01 19:17:35 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_fdf
 unsigned int		ft_abs(int x);
 void				read_file(char *file_name, t_fdf *data);
 void				error(t_fdf **data, int flag);
+void				handle_error(t_fdf *data, int error_code);
 void				free_t_fdf(t_fdf *data);
 void				handle_empty_file(void);
 void				visualize(t_fdf *data);

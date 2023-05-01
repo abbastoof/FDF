@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:04:19 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/01 18:43:12 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/01 19:27:16 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	read_dimensions(t_fdf *data)
 		free(data->line);
 	}
 	if (!data->split)
-		handle_empty_file();
+		handle_error(data, 4);
 	while (data->split[data->width] && data->split[data->width][0] != '\n')
 		data->width++;
 	ft_free_split(data->split);
@@ -103,27 +103,22 @@ void	read_file(char *file_name, t_fdf *data)
 	int	i;
 
 	data->fd = open(file_name, O_RDONLY);
-	// if (data->fd == 0 || data->fd < 0)
-	// 	error(data->fd, 0);
+	if (data->fd < 0)
+		handle_error(data, 0);
 	read_lines(data);
 	data->fd = open(file_name, O_RDONLY, 0);
-	// if (data->fd == -1)
-	// 	error(data->fd, 0);
+	if (data->fd == -1)
+		handle_error(data, 0);
 	stash_file(data);
-	// if (!data->lines)
-	// 	error(data->lines, 1);
 	data->z_matrix = (t_matrix **)malloc(sizeof(t_matrix *) * data->height);
-	// if (!data->z_matrix)
-	// 	error(data->z_matrix, 0);
+	if (!data->z_matrix)
+		handle_error(data, 2);
 	i = 0;
 	while (i < data->height)
 	{
 		data->z_matrix[i] = (t_matrix *)malloc(sizeof(t_matrix) * data->width);
 		if (!data->z_matrix[i])
-		{
-			perror("fdf");
-			exit(1);
-		}
+			handle_error(data, 3);
 		i++;
 	}
 	init_z_matrix(data);
