@@ -6,15 +6,15 @@
 #    By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 18:44:20 by atoof             #+#    #+#              #
-#    Updated: 2023/05/01 16:49:46 by atoof            ###   ########.fr        #
+#    Updated: 2023/05/02 16:46:37 by atoof            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 SRC_DIR = ./src
-SRC = colors.c draw.c ft_atoi_base.c ft_free_split.c iometric.c main.c \
-      visualize.c default_settings.c error.c ft_free.c helper_functions.c \
-      key_handler.c read_file.c zoom.c
+SRC = colors.c draw.c ft_atoi_base.c iometric.c main.c \
+      visualize.c default_settings.c error.c helper_functions.c \
+      key_handler.c read_file.c zoom.c init_z_matrix.c
 HEADER_DIR = ./include
 HEADER = fdf.h
 OBJ_DIR = ./obj

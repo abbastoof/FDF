@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 15:50:36 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/01 15:56:25 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/02 14:56:55 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 void	key_info(t_fdf *data)
 {
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, Y - 100, 0xFFFFFF,
-				"zoom   	-> - / +");
+		"zoom        -> - / +");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, Y - 80, 0xFFFFFF,
-				"move   	-> use arrow keys");
+		"move        -> use arrow keys");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, Y - 60, 0xFFFFFF,
-				"z axis 	-> w / s");
+		"z axis      -> w / s");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 10, Y - 40, 0xFFFFFF,
-			"projection -> p");
+		"projection  -> p");
 }
 
-int	mouse_handler(t_fdf *tmp)
+int	mouse_handler(t_fdf *data)
 {
-	mlx_destroy_window(tmp->mlx_ptr, tmp->win_ptr);
-	free_matrix(tmp, 1);
+	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	free_z_matrix(data);
 	exit(0);
 }
 
@@ -59,6 +59,6 @@ void	visualize(t_fdf *data)
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img, 0, 0);
 	key_info(data);
 	mlx_key_hook(data->win_ptr, deal_key, data);
-	mlx_hook(data->win_ptr, 17, 0, mouse_handler, &data);
+	mlx_hook(data->win_ptr, 17, 0, mouse_handler, data);
 	mlx_loop(data->mlx_ptr);
 }

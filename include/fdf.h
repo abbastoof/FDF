@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:02:17 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/01 19:17:35 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/02 16:26:26 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@
 # define FDF_H
 
 # include "../libft/libft.h"
+# include <errno.h>
 # include <math.h>
 # include <mlx.h>
 # include <stdio.h>
-# include <errno.h>
-
 
 # define FALSE 0
 # define TRUE 1
@@ -46,6 +45,8 @@
 # define RIGHT 124
 # define DOWN 125
 # define UP 126
+# define NUM_ERROR_MESSAGES 6
+
 
 typedef struct s_matrix
 {
@@ -97,32 +98,29 @@ typedef struct s_fdf
 	t_matrix		**z_matrix;
 }					t_fdf;
 
-unsigned int		ft_abs(int x);
+void				default_settings(t_fdf *data);
 void				read_file(char *file_name, t_fdf *data);
-void				error(t_fdf **data, int flag);
+void				init_z_matrix(t_fdf *data);
 void				handle_error(t_fdf *data, int error_code);
 void				free_t_fdf(t_fdf *data);
-void				handle_empty_file(void);
-void				visualize(t_fdf *data);
-int					max1(int a, int b);
-float				mod(float i);
-void				bresenham(t_fdf *data, t_point p1, t_point p2);
-void				my_mlx_pixel_put(t_fdf *data, int x, int y, int color);
-int					numlength(unsigned long n, int base);
 void				create_window(t_fdf *data);
-unsigned int		ft_atoi_base(const char *str);
-void				init_points(t_fdf *data, t_point p1, t_point p2);
-void				free_matrix(t_fdf *data, int flag);
-void				ft_free_split(char **split);
+void				visualize(t_fdf *data);
 int					deal_key(int key, t_fdf *data);
-void				z_init(t_fdf *data, t_point *p1, t_point *p2);
-void				default_settings(t_fdf *data);
-void				zoom(t_fdf *data, t_point *p1, t_point *p2);
-void				shifting(t_fdf *data, t_point *p1, t_point *p2);
-void				isometric(float *x, float *y, int z);
 void				two_d_handler(int key, t_fdf *data);
-int					colors(t_fdf *data, t_point p1, t_point p2);
-int					prepare_points(t_fdf *data, t_point *p1, t_point *p2);
 void				zoom_key_handler(int key, t_fdf *data);
+void				z_init(t_fdf *data, t_point *p1, t_point *p2);
+void				shifting(t_fdf *data, t_point *p1, t_point *p2);
+void				zoom(t_fdf *data, t_point *p1, t_point *p2);
+void				isometric(float *x, float *y, int z);
+void				init_points(t_fdf *data, t_point p1, t_point p2);
+int					prepare_points(t_fdf *data, t_point *p1, t_point *p2);
+void				bresenham(t_fdf *data, t_point p1, t_point p2);
+int					colors(t_fdf *data, t_point p1, t_point p2);
+void				my_mlx_pixel_put(t_fdf *data, int x, int y, int color);
+unsigned int		ft_abs(int x);
+int					numlength(unsigned long n, int base);
+unsigned int		ft_atoi_base(const char *str);
+void				ft_free_split(char **split);
+void				free_z_matrix(t_fdf *data);
 
 #endif

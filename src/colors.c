@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 18:05:38 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/01 18:54:28 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/02 14:07:59 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	colors(t_fdf *data, t_point p1, t_point p2)
 	if (color2 != 0)
 		return (color2);
 	if (z1 == 0 || z2 == 0)
-		return (0xE05040);
+		return (0xFFD700);
 	else if (z2 > z1)
-		return (0x40D0E0);
+		return (0x6B8E23);
 	else
-		return (0x40E0D0);
+		return (0xCD5C5C);
 }

@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:04:19 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/01 19:27:16 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/02 16:31:04 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	read_dimensions(t_fdf *data)
 	ft_free_split(data->split);
 }
 
-void	read_lines(t_fdf *data)
+static void	read_lines(t_fdf *data)
 {
 	read_dimensions(data);
 	data->lines = (char **)ft_calloc(sizeof(char *), data->height + 1);
@@ -51,7 +51,7 @@ void	read_lines(t_fdf *data)
 	close(data->fd);
 }
 
-void	stash_file(t_fdf *data)
+static void	stash_file(t_fdf *data)
 {
 	int	i;
 
@@ -66,36 +66,6 @@ void	stash_file(t_fdf *data)
 		free(data->line);
 	}
 	close(data->fd);
-}
-
-void	init_z_matrix(t_fdf *data)
-{
-	int	i;
-	int	j;
-	int	element;
-
-	i = -1;
-	while (++i < data->height)
-	{
-		data->split = ft_split(data->lines[i], ' ');
-		// error handling
-		j = -1;
-		while (++j < data->width)
-		{
-			element = ft_atoi(data->split[j]);
-			data->z_matrix[i][j].z = element;
-			if (numlength((int)element,
-					10) < (int)ft_strlen(data->split[j]) - 1)
-			{
-				data->s_color = ft_strchr(data->split[j], ',');
-				data->s_color += 1;
-				data->z_matrix[i][j].color = ft_atoi_base(data->s_color);
-			}
-			else
-				data->z_matrix[i][j].color = 0;
-		}
-		ft_free_split(data->split);
-	}
 }
 
 void	read_file(char *file_name, t_fdf *data)
