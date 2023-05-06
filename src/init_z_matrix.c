@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 16:25:05 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/02 16:25:35 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/02 19:10:13 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	set_z_matrix_element(t_fdf *data, int i, int j)
 		data->z_matrix[i][j].color = 0;
 }
 
-void	init_z_matrix(t_fdf *data)
+void	init_z_matrix(char **argv, t_fdf *data)
 {
 	int	i;
 	int	j;
@@ -37,7 +37,7 @@ void	init_z_matrix(t_fdf *data)
 	{
 		data->split = ft_split(data->lines[i], ' ');
 		if (!data->split)
-			handle_error(data, 5);
+			handle_error(argv, data, 4);
 		j = 0;
 		while (j < data->width)
 		{

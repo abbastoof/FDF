@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:28:37 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/02 16:44:01 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/02 19:10:57 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,34 +57,15 @@ void	free_t_fdf(t_fdf *data)
 	}
 }
 
-const char	*get_error_message(int error_code)
+void	cleanup_resources(t_fdf *data, int error_code)
 {
-	static const char	*error_messages[NUM_ERROR_MESSAGES] = {
-		"Error opening file",
-		"Error reading lines",
-		"Error allocating memory for z_matrix",
-		"Error allocating memory for z_matrix row",
-		"Error: Empty file",
-		"Error splitting line"};
+	int	k;
 
-	if (error_code >= 0 && error_code < NUM_ERROR_MESSAGES)
-		return (error_messages[error_code]);
-	return ("Unknown error");
-}
-
-void	handle_error(t_fdf *data, int error_code)
-{
-	const char	*error_message;
-	int			k;
-
-	error_message = get_error_message(error_code);
 	if (error_code == 1)
 		free_t_fdf(data);
 	else if (error_code == 2 || error_code == 3)
 		free_z_matrix(data);
 	else if (error_code == 4)
-		ft_printf("%s (%d)\n", error_message, errno);
-	else if (error_code == 5)
 	{
 		k = 0;
 		while (k < data->height)
@@ -94,7 +75,20 @@ void	handle_error(t_fdf *data, int error_code)
 		}
 		free(data->lines);
 	}
+}
+
+void	handle_error(char **argv, t_fdf *data, int error_code)
+{
+	if (error_code == 0)
+	{
+		ft_printf("%s: ", argv[0]);
+		perror(argv[1]);
+	}
 	else
-		perror(error_message);
+	{
+		cleanup_resources(data, error_code);
+		ft_printf("%s: ", argv[0]);
+		perror(argv[1]);
+	}
 	exit(1);
 }

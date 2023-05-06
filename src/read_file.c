@@ -6,13 +6,13 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:04:19 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/02 16:31:04 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/02 19:10:05 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void	read_dimensions(t_fdf *data)
+static void	read_dimensions(char **argv, t_fdf *data)
 {
 	int	flag;
 
@@ -33,19 +33,19 @@ static void	read_dimensions(t_fdf *data)
 		free(data->line);
 	}
 	if (!data->split)
-		handle_error(data, 4);
+		handle_error(argv, data, 4);
 	while (data->split[data->width] && data->split[data->width][0] != '\n')
 		data->width++;
 	ft_free_split(data->split);
 }
 
-static void	read_lines(t_fdf *data)
+static void	read_lines(char **argv, t_fdf *data)
 {
-	read_dimensions(data);
+	read_dimensions(argv, data);
 	data->lines = (char **)ft_calloc(sizeof(char *), data->height + 1);
 	if (!data->lines)
 	{
-		free_t_fdf(data);
+		handle_error(argv, data, 1);
 		return ;
 	}
 	close(data->fd);
@@ -68,28 +68,28 @@ static void	stash_file(t_fdf *data)
 	close(data->fd);
 }
 
-void	read_file(char *file_name, t_fdf *data)
+void	read_file(char **argv, t_fdf *data)
 {
 	int	i;
 
-	data->fd = open(file_name, O_RDONLY);
+	data->fd = open(argv[1], O_RDONLY);
 	if (data->fd < 0)
-		handle_error(data, 0);
-	read_lines(data);
-	data->fd = open(file_name, O_RDONLY, 0);
+		handle_error(argv, data, 0);
+	read_lines(argv, data);
+	data->fd = open(argv[1], O_RDONLY, 0);
 	if (data->fd == -1)
-		handle_error(data, 0);
+		handle_error(argv, data, 0);
 	stash_file(data);
 	data->z_matrix = (t_matrix **)malloc(sizeof(t_matrix *) * data->height);
 	if (!data->z_matrix)
-		handle_error(data, 2);
+		handle_error(argv, data, 2);
 	i = 0;
 	while (i < data->height)
 	{
 		data->z_matrix[i] = (t_matrix *)malloc(sizeof(t_matrix) * data->width);
 		if (!data->z_matrix[i])
-			handle_error(data, 3);
+			handle_error(argv, data, 3);
 		i++;
 	}
-	init_z_matrix(data);
+	init_z_matrix(argv, data);
 }

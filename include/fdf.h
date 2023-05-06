@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:02:17 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/02 16:26:26 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/02 19:11:18 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 
 # define FALSE 0
 # define TRUE 1
-# define ERROR
 # define X 1024
 # define Y 768
 # define ESCAPE 53
@@ -45,8 +44,6 @@
 # define RIGHT 124
 # define DOWN 125
 # define UP 126
-# define NUM_ERROR_MESSAGES 6
-
 
 typedef struct s_matrix
 {
@@ -99,9 +96,9 @@ typedef struct s_fdf
 }					t_fdf;
 
 void				default_settings(t_fdf *data);
-void				read_file(char *file_name, t_fdf *data);
-void				init_z_matrix(t_fdf *data);
-void				handle_error(t_fdf *data, int error_code);
+void				read_file(char **argv, t_fdf *data);
+void				init_z_matrix(char **argv, t_fdf *data);
+void				handle_error(char **argv, t_fdf *data, int error_code);
 void				free_t_fdf(t_fdf *data);
 void				create_window(t_fdf *data);
 void				visualize(t_fdf *data);

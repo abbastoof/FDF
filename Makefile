@@ -6,7 +6,7 @@
 #    By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 18:44:20 by atoof             #+#    #+#              #
-#    Updated: 2023/05/02 16:46:37 by atoof            ###   ########.fr        #
+#    Updated: 2023/05/06 15:49:06 by atoof            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,12 @@ OBJ_DIR = ./obj
 OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 LIBFT = ./libft/libft.a
 FLAGS = -Wall -Werror -Wextra
-MLX_MAC = ./minilibx_macos/
-KEY = -lmlx -framework OpenGL -framework AppKit
-
+UNAME := $(shell uname)
+ifeq ($(UNAME), Darwin)
+	KEY = -lmlx -framework OpenGL -framework AppKit
+else
+	KEY = -lmlx -lX11 -lXext -lm
+endif
 # ANSI escape sequences for text formatting
 BOLD = \033[1m
 GREEN = \033[0;32m
@@ -37,18 +40,23 @@ vpath %.h $(HEADER_DIR)
 all: organize_files $(NAME)
 
 organize_files:
-	@echo "$(YELLOW)$(BOLD)Organizing files...$(NC)"
-	@mkdir -p $(SRC_DIR) $(HEADER_DIR) $(OBJ_DIR)
-	@find . -maxdepth 1 -iname "*.c" -exec mv {} $(SRC_DIR) \; -exec touch {} \;
-	@find . -maxdepth 1 -iname "*.h" -exec mv {} $(HEADER_DIR) \;
+	@if [ ! -d $(SRC_DIR) ] || [ ! -d $(HEADER_DIR) ] || [ ! -d $(OBJ_DIR) ]; then \
+		echo "$(YELLOW)$(BOLD)Organizing files...$(NC)"; \
+		mkdir -p $(SRC_DIR) $(HEADER_DIR) $(OBJ_DIR); \
+		find . -maxdepth 1 -type f -iname "*.c" -exec mv {} $(SRC_DIR) \; -exec touch {} \;; \
+		find . -maxdepth 1 -type f -iname "*.h" -exec mv {} $(HEADER_DIR) \;; \
+		find . -maxdepth 1 -type f -empty -delete; \
+	else \
+		echo "$(YELLOW)$(BOLD)$(NAME) is already up-to-date!$(NC)"; \
+	fi
 
 $(NAME): $(OBJ)
 	@if [ -f $(NAME) ] && [ "$(OBJ)" -ot "$(NAME)" ]; then \
-		echo "$(YELLOW)$(BOLD)$(NAME) is already up-to-date!$(NC)"; \
+		echo "$(GREEN)$(BOLD)$(NAME) is already up-to-date!$(NC)"; \
 	else \
 		echo "$(YELLOW)$(BOLD)Compiling $(NAME)...$(NC)"; \
 		make -C ./libft; \
-		cc $(FLAGS) $(OBJ) -I$(HEADER_DIR) $(LIBFT) -L $(MLX_MAC) $(KEY) -o $@; \
+		cc $(FLAGS) $(OBJ) -I$(HEADER_DIR) $(LIBFT) $(KEY) -o $@; \
 		echo "$(GREEN)$(BOLD)$(NAME) successfully compiled!$(NC)"; \
 	fi
 
@@ -68,3 +76,4 @@ fclean: clean
 	@echo "$(GREEN)$(BOLD)$(NAME) successfully cleaned!$(NC)"
 
 re: fclean all
+

@@ -30,7 +30,6 @@ typedef struct s_list
 }					t_list;
 
 t_list				*ft_lstnew(void *content);
-int					count_str(char const *str, char c);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_isalnum(int c);

@@ -6,7 +6,7 @@
 /*   By: atoof <atoof@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 19:03:24 by atoof             #+#    #+#             */
-/*   Updated: 2023/05/02 15:36:53 by atoof            ###   ########.fr       */
+/*   Updated: 2023/05/06 15:31:40 by atoof            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 		ft_printf("%s <file name>", argv[0]);
 		return (-1);
 	}
-	read_file(argv[1], &data);
+	read_file(argv, &data);
 	create_window(&data);
 	visualize(&data);
 	return (0);
