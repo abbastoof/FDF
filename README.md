@@ -18,7 +18,7 @@ This project is a simple 3D wireframe renderer that reads a map file and creates
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/username/fdf.git`
+1. Clone the repository: `git clone https://github.com/abbastoof/FDF.git`
 2. Change to the project directory: `cd fdf`
 3. Compile the project: `make`
 
