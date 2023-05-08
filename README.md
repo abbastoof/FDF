@@ -7,7 +7,6 @@ This project is a simple 3D wireframe renderer that reads a map file and creates
 1. [Requirements](#requirements)
 2. [Installation](#installation)
 3. [Usage](#usage)
-4. [License](#license)
 
 ## Requirements
 
