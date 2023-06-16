@@ -58,7 +58,7 @@ void	visualize(t_fdf *data)
 	init_points(data, data->p1, data->p2);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img, 0, 0);
 	key_info(data);
-	mlx_key_hook(data->win_ptr, deal_key, data);
+	mlx_hook(data->win_ptr, 2, 1L << 1, deal_key, data);
 	mlx_hook(data->win_ptr, 17, 0, mouse_handler, data);
 	mlx_loop(data->mlx_ptr);
 }
